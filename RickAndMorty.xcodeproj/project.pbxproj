@@ -207,9 +207,9 @@
 				071297992A3079FA002BC784 /* View */,
 				0712979C2A307A35002BC784 /* Presenter */,
 				078A02372A307A990078172C /* Interactor */,
+				071297892A2F7CAE002BC784 /* Entity */,
 				071297962A30717E002BC784 /* Protocol */,
 				078A02482A320D350078172C /* DTO */,
-				071297892A2F7CAE002BC784 /* Entity */,
 			);
 			path = CharactersList;
 			sourceTree = "<group>";

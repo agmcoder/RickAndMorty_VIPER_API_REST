@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 
 class CharacterCellView: UITableViewCell {
+    
     let characterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -42,6 +43,15 @@ class CharacterCellView: UITableViewCell {
         return label
     }()
     
+    let statusIndicator: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
+        return view
+    }()
+
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -56,6 +66,7 @@ class CharacterCellView: UITableViewCell {
         addSubview(characterImageView)
         addSubview(characterName)
         addSubview(characterStatus)
+        addSubview(statusIndicator)
         
         NSLayoutConstraint.activate([
             characterImageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 12),
@@ -72,8 +83,13 @@ class CharacterCellView: UITableViewCell {
             characterStatus.leadingAnchor.constraint(equalTo: characterImageView.trailingAnchor, constant: 20),
             characterStatus.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
             characterStatus.topAnchor.constraint(equalTo: characterName.bottomAnchor, constant: 8),
-            characterStatus.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 8)
+            characterStatus.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: 8),
             
+            statusIndicator.centerYAnchor.constraint(equalTo: characterStatus.centerYAnchor),
+            //statusIndicator.leadingAnchor.constraint(equalTo: characterStatus.trailingAnchor, constant: ),
+            statusIndicator.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -190),
+            statusIndicator.widthAnchor.constraint(equalToConstant: 10),
+            statusIndicator.heightAnchor.constraint(equalToConstant: 10),
             
         ])
     }
@@ -82,6 +98,18 @@ class CharacterCellView: UITableViewCell {
         characterName.text = model.name
         characterStatus.text = model.status.rawValue
         characterImageView.kf.setImage(with: URL(string: model.image))
+        setColorStatus(status: model.status)
         
+    }
+    
+    private func setColorStatus(status: Status){
+        switch status {
+            case .alive:
+                statusIndicator.backgroundColor = .green
+            case .dead:
+                statusIndicator.backgroundColor = .red
+            default:
+                statusIndicator.backgroundColor = .gray
+        }
     }
 }
